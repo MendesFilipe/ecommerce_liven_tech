@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import Header from '../components/Header';
+import ProductFeed from '../components/ProductFeed';
+import { GetServerSideProps } from 'next';
 
 interface Product {
   id: number;
@@ -21,10 +23,28 @@ const Home: React.FC<HomeProps> = ({ products }) => {
         <title>E-commerce - Liven</title>
       </Head>
 
-      {/*Header*/}
+      {/* Header */}
       <Header />
+
+      {/* Main */}
+      <main className='max-w-screen-2xl mx-auto'>
+        {/* ProductFeed */}
+        <ProductFeed products={products} />
+      </main>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const products = await fetch('https://fakestoreapi.com/products').then(
+    (res) => res.json()
+  );
+
+  return {
+    props: {
+      products,
+    },
+  };
 };
 
 export default Home;
