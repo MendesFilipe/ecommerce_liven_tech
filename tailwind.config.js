@@ -13,6 +13,8 @@ module.exports = {
         },
         green: {
           DEFAULT: '#78d98a',
+          light: '#85e696',
+          dark: '#5ebf72',
         },
         orange: {
           DEFAULT: '#E66A22',
