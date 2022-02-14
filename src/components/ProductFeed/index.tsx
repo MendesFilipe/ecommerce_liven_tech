@@ -1,3 +1,4 @@
+import Product from '../Product';
 interface IProduct {
   id: number;
   title: string;
@@ -15,7 +16,15 @@ const ProductFeed: React.FC<Props> = ({ products }) => {
   return (
     <div>
       {products.map(({ id, title, price, description, category, image }) => (
-        <h1>{title}</h1>
+        <Product
+          key={id}
+          id={id}
+          title={title}
+          price={price}
+          description={description}
+          category={category}
+          image={image}
+        />
       ))}
     </div>
   );
