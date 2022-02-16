@@ -51,7 +51,6 @@ const Header: React.FC<Props> = ({ products }) => {
         {/* Search */}
         <div className='hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer bg-green hover:bg-orange'>
           <input
-            onMouseOver={() => setShowResults(true)}
             onBlur={() => setShowResults(false)}
             onFocus={() => setShowResults(true)}
             value={searchTerm}
