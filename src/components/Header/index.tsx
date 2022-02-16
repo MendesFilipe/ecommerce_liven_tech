@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Currency from 'react-currency-formatter';
 import { SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 interface IProduct {
   id: number;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ products }) => {
+  const [session] = useSession();
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [showResults, setShowResults] = useState<Boolean>(false);
@@ -24,15 +26,19 @@ const Header: React.FC<Props> = ({ products }) => {
   const handleSearch = (e) => {
     let trem = e.target.value;
     trem = trem.toLowerCase();
-    console.log('trem', trem);
-    console.log('product', products);
     setSearchTerm(trem);
     setSearchResults(
       products?.filter((product) => product.title.toLowerCase().includes(trem))
     );
   };
 
-  console.log('searchResults', searchResults);
+  const handleAuth = (): void => {
+    if (session) {
+      signOut();
+    } else {
+      signIn();
+    }
+  };
 
   return (
     <header>
@@ -105,8 +111,8 @@ const Header: React.FC<Props> = ({ products }) => {
 
         {/* Right */}
         <div className='text-green flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
-          <div className='link'>
-            <p>Hello</p>
+          <div onClick={handleAuth} className='link'>
+            <p>Hello, {session ? `${session.user.name}` : 'Sign In'}</p>
             <p className='font-extrabold md:text-sm'>Account & Lists</p>
           </div>
 
