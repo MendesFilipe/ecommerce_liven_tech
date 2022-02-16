@@ -1,7 +1,39 @@
 import Image from 'next/image';
+import { useState } from 'react';
+import Currency from 'react-currency-formatter';
 import { SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 
-function Header() {
+interface IProduct {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+}
+
+interface Props {
+  products: IProduct[];
+}
+
+const Header: React.FC<Props> = ({ products }) => {
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [showResults, setShowResults] = useState<Boolean>(false);
+
+  const handleSearch = (e) => {
+    let trem = e.target.value;
+    trem = trem.toLowerCase();
+    console.log('trem', trem);
+    console.log('product', products);
+    setSearchTerm(trem);
+    setSearchResults(
+      products?.filter((product) => product.title.toLowerCase().includes(trem))
+    );
+  };
+
+  console.log('searchResults', searchResults);
+
   return (
     <header>
       {/*Top nav*/}
@@ -19,10 +51,57 @@ function Header() {
         {/* Search */}
         <div className='hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer bg-green hover:bg-orange'>
           <input
-            className='p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4'
+            onMouseOver={() => setShowResults(true)}
+            onBlur={() => setShowResults(false)}
+            onFocus={() => setShowResults(true)}
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder='Search anything you need...'
+            className='p-2 px-5 h-full width-6 flex-grow rounded flex-shrink rounded-l-md focus:outline-none'
             type='text'
           />
           <SearchIcon className='h-12 p-4' />
+          {showResults && !!searchResults?.length && (
+            <div
+              onClick={() => setShowResults(true)}
+              onMouseOver={() => setShowResults(true)}
+              onMouseLeave={() => setShowResults(false)}
+              className='absolute w-full bg-white bottom-0 z-40 rounded-md'
+              style={{
+                transform: 'translateY(15%)',
+                height: 'auto',
+                maxHeight: '400px',
+                top: '0px',
+                maxWidth: '71%',
+                overflowY: 'auto',
+              }}
+            >
+              {!!searchResults?.length ? (
+                searchResults.map(({ id, title, price, category }) => (
+                  <div
+                    key={Math.random()}
+                    className='p-2 mt-2 border-b-2 rounded-md border-gray-100 bg-gray-50'
+                  >
+                    <h5 className='font-medium text-sm text-gray-600'>
+                      {title}
+                    </h5>
+                    <p className='text-xs text-gray-400'>
+                      {category}
+                      <Currency quantity={price} />
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <>
+                  {searchTerm && (
+                    <p className='text-xs text-gray-400 text-center py-2'>
+                      No product found
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Right */}
@@ -50,6 +129,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

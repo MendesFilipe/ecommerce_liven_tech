@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = ({ products }) => {
       </Head>
 
       {/* Header */}
-      <Header />
+      <Header products={products} />
 
       {/* Main */}
       <main className='max-w-screen-2xl mx-auto'>
