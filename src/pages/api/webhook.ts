@@ -6,7 +6,7 @@ interface App {
   credential: admin.credential.Credential;
 }
 
-const serviceAccount = require('');
+const serviceAccount = require('../../../permissions.json');
 
 const appParams: App = {
   credential: admin.credential.cert(serviceAccount),
