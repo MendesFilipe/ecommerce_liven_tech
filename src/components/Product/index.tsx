@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Currency from 'react-currency-formatter';
 import { useState } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
+import { addToCart } from '../../slices/cartSlice';
+import { useAppDispatch } from '../../app/hooks';
 
 const MAX_RATING: number = 5;
 const MIN_RATING: number = 1;
@@ -15,6 +17,10 @@ interface ProductProps {
   category: string;
 }
 
+interface IProduct extends ProductProps {
+  rating: number;
+}
+
 const Product: React.FC<ProductProps> = ({
   id,
   title,
@@ -23,9 +29,26 @@ const Product: React.FC<ProductProps> = ({
   category,
   image,
 }) => {
+  const dispatch = useAppDispatch();
   const [rating] = useState<number>(
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
   );
+
+  const addItemToCart = (): void => {
+    const product: IProduct = {
+      id,
+      title,
+      price,
+      rating,
+      description,
+      category,
+      image,
+    };
+
+    //Sending the product as an action to the Redux store
+    dispatch(addToCart(product));
+  };
+
   return (
     <div className='relative flex flex-col m-5 bg-white z-30 p-10'>
       <p className='absolute top-2 right-2 text-xs itelic text-gray-400'>
@@ -48,7 +71,9 @@ const Product: React.FC<ProductProps> = ({
         <Currency quantity={price} currency='USD' />
       </div>
 
-      <button className='mt-auto button'>Add to cart</button>
+      <button onClick={addItemToCart} className='mt-auto button'>
+        Add to cart
+      </button>
     </div>
   );
 };
