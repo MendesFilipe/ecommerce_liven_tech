@@ -14,8 +14,8 @@ const appParams: App = {
 
 const app = !admin.apps.length ? admin.initializeApp(appParams) : admin.app();
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const endpointSecret: string = process.env.STRIPE_SIGNING_SECRET;
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
+const endpointSecret: string = `${process.env.STRIPE_SIGNING_SECRET}`;
 
 interface Order {
   amount: number;
