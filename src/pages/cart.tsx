@@ -13,7 +13,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useAppSelector } from '../app/hooks';
-const stripePromise = loadStripe(`${process.env.stripe_public_key}`);
+const stripePromise = loadStripe(process.env.stripe_public_key);
 
 interface requestType {
   items: any[];
