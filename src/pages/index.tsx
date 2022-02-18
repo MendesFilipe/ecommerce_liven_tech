@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Header from '../components/Header';
+import { getSession } from 'next-auth/client';
 import ProductFeed from '../components/ProductFeed';
 import { GetServerSideProps } from 'next';
 
@@ -36,6 +37,7 @@ const Home: React.FC<HomeProps> = ({ products }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
   const products = await fetch('https://fakestoreapi.com/products').then(
     (res) => res.json()
   );
@@ -43,6 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       products,
+      session,
     },
   };
 };
