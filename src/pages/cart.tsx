@@ -1,14 +1,19 @@
 import Head from 'next/head';
 import CartProduct from '../components/CartProduct';
 import Header from '../components/Header';
-import { selectItems, selectTotal } from '../slices/cartSlice';
+import {
+  selectItems,
+  selectTotalItems,
+  selectTotal,
+} from '../slices/cartSlice';
 import FlipMove from 'react-flip-move';
 import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/client';
 import { loadStripe } from '@stripe/stripe-js';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useAppSelector } from '../app/hooks';
-const stripePromise = loadStripe(process.env.stripe_public_key);
+const stripePromise = loadStripe(`${process.env.stripe_public_key}`);
 
 interface requestType {
   items: any[];
@@ -21,11 +26,22 @@ interface resultType {
 
 const Cart: React.FC = () => {
   const items = useAppSelector<any[]>(selectItems);
+  const itemsTotal = useAppSelector<number>(selectTotalItems);
   const [session] = useSession();
   const total = useAppSelector<number>(selectTotal);
 
   const createCheckoutSession = async () => {
     const stripe = await stripePromise;
+
+    toast.info('Processing, Please Wait', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
     const requestBody: requestType = {
       items,
@@ -69,7 +85,7 @@ const Cart: React.FC = () => {
             <FlipMove>
               {items.map(
                 (
-                  { id, title, price, rating, description, category, image },
+                  { id, title, price, rating, description, image, quantity },
                   i
                 ) => (
                   <CartProduct
@@ -79,8 +95,8 @@ const Cart: React.FC = () => {
                     price={price}
                     rating={rating}
                     description={description}
-                    category={category}
                     image={image}
+                    quantity={quantity}
                   />
                 )
               )}
@@ -90,10 +106,10 @@ const Cart: React.FC = () => {
 
         {/* Right */}
         <div className='flex flex-col bg-white p-10 shadow-md'>
-          {items.length > 0 && (
+          {itemsTotal > 0 && (
             <>
               <h2 className='whitespace-nowrap'>
-                Subtotal ({items.length} {items.length === 1 ? 'item' : 'items'}
+                Subtotal ({itemsTotal} {itemsTotal === 1 ? 'item' : 'items'}
                 ):{' '}
                 <span className='font-bold'>
                   <Currency quantity={total} currency='USD' />

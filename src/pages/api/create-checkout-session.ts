@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 
 interface requestType {
   items: any[];
@@ -48,7 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       description: item.description,
       quantity: 1,
       price_data: {
-        currency: 'cad',
+        currency: 'brl',
         unit_amount: item.price * 100,
         product_data: {
           name: item.title,
@@ -62,9 +62,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const sessionData: Session = {
     payment_method_types: ['card'],
-    shipping_rates: ['shr_1IumvbLWkDDhDpEH6w5agpQP'],
+    shipping_rates: ['shr_1KUPlfBcOtahDqY2rGqVI8JF'],
     shipping_address_collection: {
-      allowed_countries: ['CA', 'GB', 'US'],
+      allowed_countries: ['US', 'CA', 'GB'],
     },
     line_items: transformedItems,
     mode: 'payment',

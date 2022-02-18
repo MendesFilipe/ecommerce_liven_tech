@@ -5,7 +5,7 @@ import { SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { selectItems } from '../../slices/cartSlice';
+import { selectTotalItems } from '../../slices/cartSlice';
 
 interface IProduct {
   id: number;
@@ -23,7 +23,7 @@ interface Props {
 const Header: React.FC<Props> = ({ products }) => {
   const [session] = useSession();
   const router = useRouter();
-  const items = useSelector(selectItems);
+  const items = useSelector(selectTotalItems);
 
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -123,17 +123,12 @@ const Header: React.FC<Props> = ({ products }) => {
             <p className='font-extrabold md:text-sm'>Account & Lists</p>
           </div>
 
-          <div className='link'>
-            <p>Returns</p>
-            <p className='font-extrabold md:text-sm'>& Orders</p>
-          </div>
-
           <div
             onClick={() => router.push('/cart')}
             className='relative link flex items-center'
           >
             <span className='absolute top-0 right-0 md:right-10 h-4 w-4 bg-orange text-center rounded-full text-white font-bold'>
-              {items.length}
+              {items}
             </span>
             <ShoppingCartIcon className='h-10' />
             <p className='hidden md:inline font-extrabold md:text-sm mt-2'>

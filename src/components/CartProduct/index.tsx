@@ -1,9 +1,13 @@
 import Image from 'next/image';
 import React, { forwardRef } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
 import Currency from 'react-currency-formatter';
-import { addToCart, removeFromCart } from '../../slices/cartSlice';
+import { removeFromCart } from '../../slices/cartSlice';
 import { useAppDispatch } from '../../app/hooks';
+import { selectTotalItems } from '../../slices/cartSlice';
+import QuantityCount from '../QuantityCount';
+import { useAppSelector } from '../../app/hooks';
 
 interface Product {
   id: number;
@@ -11,27 +15,15 @@ interface Product {
   price: number;
   rating: number;
   description: string;
-  category: string;
   image: string;
+  quantity?: number;
 }
 
 const CartProduct: React.FC<Product> = forwardRef<HTMLDivElement, Product>(
-  ({ id, title, price, rating, description, category, image }, ref) => {
+  ({ id, title, price, rating, description, image, quantity }, ref) => {
     const dispatch = useAppDispatch();
-
-    const addItemToCart = (): void => {
-      const product: Product = {
-        id,
-        title,
-        price,
-        rating,
-        description,
-        category,
-        image,
-      };
-
-      dispatch(addToCart(product));
-    };
+    const itemsTotal = useAppSelector<number>(selectTotalItems);
+    const [quantityUp, setQuantityUp] = useState(quantity);
 
     const removeItemFromCart = (): void => {
       dispatch(removeFromCart({ id }));
@@ -52,14 +44,21 @@ const CartProduct: React.FC<Product> = forwardRef<HTMLDivElement, Product>(
               ))}
           </div>
           <p className='text-xs my-2 line-clamp-3'>{description}</p>
-          <Currency quantity={price} currency='USD' />
+          <div className='text-gray-400'>
+            <Currency quantity={price} currency='USD' /> {' * '} {itemsTotal}{' '}
+            {' = '}
+            <Currency quantity={price * itemsTotal} currency='USD' />
+          </div>
         </div>
 
         {/* Right */}
         <div className='flex flex-col space-y-2 my-auto justify-self-end'>
-          <button className='button' onClick={addItemToCart}>
-            Add to Cart
-          </button>
+          <QuantityCount
+            id={id}
+            dispatch
+            setQuantity={setQuantityUp}
+            quantity={quantityUp}
+          />
           <button className='button' onClick={removeItemFromCart}>
             Remove from Cart
           </button>
