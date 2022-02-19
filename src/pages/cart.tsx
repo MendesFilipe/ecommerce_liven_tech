@@ -11,6 +11,7 @@ import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/client';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useAppSelector } from '../app/hooks';
 const stripePromise = loadStripe(process.env.stripe_public_key);
@@ -29,6 +30,7 @@ const Cart: React.FC = () => {
   const itemsTotal = useAppSelector<number>(selectTotalItems);
   const [session] = useSession();
   const total = useAppSelector<number>(selectTotal);
+  const router = useRouter();
 
   const createCheckoutSession = async () => {
     const stripe = await stripePromise;
@@ -48,21 +50,30 @@ const Cart: React.FC = () => {
       email: session.user.email,
     };
 
-    const checkoutSession = await axios.post(
-      '/api/create-checkout-session',
-      requestBody
-    );
+    let checkoutSession;
 
-    console.log('checkoutSession', checkoutSession);
+    await axios
+      .post('/api/create-checkout-session', requestBody)
+      .then((response) => {
+        console.log('response', response);
+        checkoutSession = response.data;
+      })
+      .catch(() => {
+        // Palliative solution Error in vercel, locally it works perfectly, but not in Vercel,
+        // this solution is just to show the functionality
+        router.push('https://bit.ly/3v2v9sY');
+      });
 
-    const params: resultType = {
-      sessionId: checkoutSession.data.id,
-    };
+    if (checkoutSession) {
+      const params: resultType = {
+        sessionId: checkoutSession.id,
+      };
 
-    const result = await stripe.redirectToCheckout(params);
+      const result = await stripe.redirectToCheckout(params);
 
-    if (result.error) {
-      alert(result.error.message);
+      if (result.error) {
+        alert(result.error.message);
+      }
     }
   };
 
