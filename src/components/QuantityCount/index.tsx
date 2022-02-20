@@ -1,4 +1,3 @@
-import styles from '../../styles/quantityCount.module.css';
 import { updateQuantity } from '../../slices/cartSlice';
 import { useDispatch } from 'react-redux';
 
@@ -30,12 +29,22 @@ function QuantityCount({
   };
 
   return (
-    <div className={styles.quantityCount}>
-      <button onClick={decreaseCount} className={styles.actionBtn}>
+    <div className='flex items-center'>
+      <button
+        onClick={decreaseCount}
+        style={{ outline: 'none' }}
+        className='flex w-[40px] h-[40px] items-center  bg-[#e8e8e8] justify-center rounded-[4px] ease-[all 0.3s] font-bold hover:bg-[#d6d6d6]'
+      >
         -
       </button>
-      <div className={styles.counter}>{quantity}</div>
-      <button onClick={increaseCount} className={styles.actionBtn}>
+      <div className='flex min-w-[41px] justify-center self-center m-[0px 3px]'>
+        {quantity}
+      </div>
+      <button
+        onClick={increaseCount}
+        style={{ outline: 'none' }}
+        className='flex w-[40px] h-[40px] items-center bg-[#e8e8e8] justify-center rounded-[4px] ease-[all 0.3s] font-bold hover:bg-[#d6d6d6]'
+      >
         +
       </button>
     </div>

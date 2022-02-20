@@ -83,7 +83,7 @@ const Product: React.FC<ProductProps> = ({
         {Array(rating)
           .fill(0)
           .map((_, i) => (
-            <StarIcon className='h-5 text-orange' />
+            <StarIcon key={i} className='h-5 text-orange' />
           ))}
       </div>
 

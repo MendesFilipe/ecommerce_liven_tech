@@ -37,7 +37,7 @@ const Cart: React.FC = () => {
 
     toast.info('Processing, Please Wait', {
       position: 'top-right',
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
@@ -55,13 +55,20 @@ const Cart: React.FC = () => {
     await axios
       .post('/api/create-checkout-session', requestBody)
       .then((response) => {
-        console.log('response', response);
         checkoutSession = response.data;
       })
       .catch(() => {
         // Palliative solution Error in vercel, locally it works perfectly, but not in Vercel,
         // this solution is just to show the functionality
-        router.push('https://bit.ly/3v2v9sY');
+        toast.error('Oops! Something went wrong, try again later', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
 
     if (checkoutSession) {
