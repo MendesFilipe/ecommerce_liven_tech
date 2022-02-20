@@ -7,6 +7,11 @@
     "start": "next start",
     "test": "jest --watch"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
   "dependencies": {
     "@heroicons/react": "^1.0.1",
     "@reduxjs/toolkit": "1.5.0",
@@ -39,6 +44,7 @@
     "@types/react": "^17.0.34",
     "autoprefixer": "^10.2.5",
     "babel-jest": "^27.3.1",
+    "husky": "^7.0.4",
     "jest": "^27.3.1",
     "postcss": "^8.2.15",
     "react-test-renderer": "^17.0.2",
