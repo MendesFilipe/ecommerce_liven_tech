@@ -15,7 +15,7 @@
   "lint-staged": {
     "src/**/*.tsx": [
       "eslint --fix",
-      "npm test",
+      "cross-env CI=true npm test --bail --findRelatedTests",
       "git add"
     ]
   },
