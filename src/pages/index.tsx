@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import { getSession } from 'next-auth/client';
 import ProductFeed from '../components/ProductFeed';
 import { GetServerSideProps } from 'next';
+import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: number;
@@ -18,10 +19,11 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ products }) => {
+  const { t } = useTranslation();
   return (
     <div className='bg-gray-100'>
       <Head>
-        <title>E-commerce - Liven</title>
+        <title>{t('title liven')}</title>
       </Head>
 
       {/* Header */}

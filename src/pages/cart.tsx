@@ -11,9 +11,9 @@ import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/client';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useAppSelector } from '../app/hooks';
+import { useTranslation } from 'react-i18next';
 const stripePromise = loadStripe(process.env.stripe_public_key);
 
 interface requestType {
@@ -30,12 +30,12 @@ const Cart: React.FC = () => {
   const itemsTotal = useAppSelector<number>(selectTotalItems);
   const [session] = useSession();
   const total = useAppSelector<number>(selectTotal);
-  const router = useRouter();
+  const { t } = useTranslation();
 
   const createCheckoutSession = async () => {
     const stripe = await stripePromise;
 
-    toast.info('Processing, Please Wait', {
+    toast.info(t('please Wait'), {
       position: 'top-right',
       autoClose: 1000,
       hideProgressBar: false,
@@ -60,7 +60,7 @@ const Cart: React.FC = () => {
       .catch(() => {
         // Palliative solution Error in vercel, locally it works perfectly, but not in Vercel,
         // this solution is just to show the functionality
-        toast.error('Oops! Something went wrong, try again later', {
+        toast.error(t('try again'), {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -87,7 +87,7 @@ const Cart: React.FC = () => {
   return (
     <div className='bg-gray-100 min-h-screen'>
       <Head>
-        <title>Your Shopping Cart</title>
+        <title>{t('shopping cart')}</title>
       </Head>
 
       <Header products={items} />

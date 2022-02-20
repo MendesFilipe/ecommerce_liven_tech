@@ -4,6 +4,7 @@ import { store } from '../app/store';
 import Hearder from '../components/Header';
 import { productContextDefaultValues } from '../__mocks__/productContextDefaultValues';
 import { render, screen } from '@testing-library/react';
+import '../../i18n';
 
 describe('<Header />', () => {
   test('Should render Component', () => {

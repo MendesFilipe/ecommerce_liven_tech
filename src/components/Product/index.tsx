@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
 import { addToCart } from '../../slices/cartSlice';
 import { useAppDispatch } from '../../app/hooks';
+import { useTranslation } from 'react-i18next';
 
 const MAX_RATING: number = 5;
 const MIN_RATING: number = 1;
@@ -35,6 +36,7 @@ const Product: React.FC<ProductProps> = ({
   const [rating] = useState<number>(
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
   );
+  const { t } = useTranslation();
 
   const addItemToCart = (): void => {
     const product: IProduct = {
@@ -94,7 +96,7 @@ const Product: React.FC<ProductProps> = ({
       </div>
 
       <button onClick={addItemToCart} className='mt-auto button'>
-        Add to cart
+        {t('add cart')}
       </button>
     </div>
   );

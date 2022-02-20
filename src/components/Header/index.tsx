@@ -6,6 +6,7 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectTotalItems } from '../../slices/cartSlice';
+import { useTranslation } from 'react-i18next';
 
 interface IProduct {
   id: number;
@@ -24,6 +25,7 @@ const Header: React.FC<Props> = ({ products }) => {
   const [session] = useSession();
   const router = useRouter();
   const items = useSelector(selectTotalItems);
+  const { t } = useTranslation();
 
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -68,7 +70,7 @@ const Header: React.FC<Props> = ({ products }) => {
             onFocus={() => setShowResults(true)}
             value={searchTerm}
             onChange={handleSearch}
-            placeholder='Search anything you need...'
+            placeholder={t('search')}
             className='p-2 px-5 h-full width-6 flex-grow rounded flex-shrink rounded-l-md focus:outline-none'
             type='text'
           />
@@ -107,7 +109,7 @@ const Header: React.FC<Props> = ({ products }) => {
                 <>
                   {searchTerm && (
                     <p className='text-xs text-gray-400 text-center py-2'>
-                      No product found
+                      {t('no product')}
                     </p>
                   )}
                 </>
@@ -119,8 +121,10 @@ const Header: React.FC<Props> = ({ products }) => {
         {/* Right */}
         <div className='text-green flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
           <div onClick={handleAuth} className='link'>
-            <p>Hello, {session ? `${session.user.name}` : 'Sign In'}</p>
-            <p className='font-extrabold md:text-sm'>Account & Lists</p>
+            <p>
+              {t('hello')} {session ? `${session.user.name}` : 'Sign In'}
+            </p>
+            <p className='font-extrabold md:text-sm'>{t('account')}</p>
           </div>
 
           <div
@@ -132,7 +136,7 @@ const Header: React.FC<Props> = ({ products }) => {
             </span>
             <ShoppingCartIcon className='h-10' />
             <p className='hidden md:inline font-extrabold md:text-sm mt-2'>
-              Cart
+              {t('cart')}
             </p>
           </div>
         </div>

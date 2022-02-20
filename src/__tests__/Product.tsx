@@ -4,6 +4,7 @@ import { store } from '../app/store';
 import Product from '../components/Product';
 import { productValue } from '../__mocks__/productContextDefaultValues';
 import { render } from '@testing-library/react';
+import '../../i18n';
 
 describe('<Product />', () => {
   test('Should render Component', () => {

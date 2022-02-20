@@ -4,6 +4,7 @@ import { Provider as AuthProvider } from 'next-auth/client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css';
+import '../../i18n';
 
 const MyApp = ({ Component, pageProps }) => {
   return (

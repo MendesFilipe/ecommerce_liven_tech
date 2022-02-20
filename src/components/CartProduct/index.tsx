@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { selectTotalItems } from '../../slices/cartSlice';
 import QuantityCount from '../QuantityCount';
 import { useAppSelector } from '../../app/hooks';
+import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: number;
@@ -24,6 +25,7 @@ const CartProduct: React.FC<Product> = forwardRef<HTMLDivElement, Product>(
     const dispatch = useAppDispatch();
     const itemsTotal = useAppSelector<number>(selectTotalItems);
     const [quantityUp, setQuantityUp] = useState(quantity);
+    const { t } = useTranslation();
 
     const removeItemFromCart = (): void => {
       dispatch(removeFromCart({ id }));
@@ -60,7 +62,7 @@ const CartProduct: React.FC<Product> = forwardRef<HTMLDivElement, Product>(
             quantity={quantityUp}
           />
           <button className='button' onClick={removeItemFromCart}>
-            Remove from Cart
+            {t('remove cart')}
           </button>
         </div>
         <div className='my-4' />
