@@ -82,7 +82,7 @@ or
 Checkout and payment with Stripe
 
   <a href="https://stripe.com/en-br">
-    <img src="https://devfilipemendes.com/Screenshot.png" alt="exemple" width="1035" height="500">
+    <img src="https://devfilipemendes.com/Screenshot.png" alt="exemple" width="1035" height="440">
   </a>
 
 <!-- LICENSE -->
