@@ -5,9 +5,7 @@ import { useState } from 'react';
 import Currency from 'react-currency-formatter';
 import { removeFromCart } from '../../slices/cartSlice';
 import { useAppDispatch } from '../../app/hooks';
-import { selectTotalItems } from '../../slices/cartSlice';
 import QuantityCount from '../QuantityCount';
-import { useAppSelector } from '../../app/hooks';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
@@ -23,7 +21,6 @@ interface Product {
 const CartProduct: React.FC<Product> = forwardRef<HTMLDivElement, Product>(
   ({ id, title, price, rating, description, image, quantity }, ref) => {
     const dispatch = useAppDispatch();
-    const itemsTotal = useAppSelector<number>(selectTotalItems);
     const [quantityUp, setQuantityUp] = useState(quantity);
     const { t } = useTranslation();
 
@@ -47,9 +44,9 @@ const CartProduct: React.FC<Product> = forwardRef<HTMLDivElement, Product>(
           </div>
           <p className='text-xs my-2 line-clamp-3'>{description}</p>
           <div className='text-gray-400'>
-            <Currency quantity={price} currency='USD' /> {' * '} {itemsTotal}{' '}
+            <Currency quantity={price} currency='USD' /> {' * '} {quantity}{' '}
             {' = '}
-            <Currency quantity={price * itemsTotal} currency='USD' />
+            <Currency quantity={price * quantity} currency='USD' />
           </div>
         </div>
 
