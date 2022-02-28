@@ -11,7 +11,7 @@
     Development of a project para liven in React and Typescript, using Next.js.
     <br />
     <br />
-    <a href="https://ecommerce-liven-tech-m5r91qoj4-fmendes.vercel.app/">View Demo</a>
+    <a href="https://ecommerce-liven-tech-jvwcb8bkl-mendesfilipe1.vercel.app/">View Demo</a>
   </p>
 </div>
 
