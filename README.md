@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://liven.tech/">
-    <img src="https://bit.ly/3Bkq0NH" alt="Logo" width="225" height="75">
+    <img src="https://ecommerce-liven-tech-jvwcb8bkl-mendesfilipe1.vercel.app/_next/image?url=https%3A%2F%2Fbit.ly%2F3Bkq0NH&w=256&q=75" alt="Logo" width="225" height="75">
   </a>
 
   <h3 align="center">E-commerce - Liven</h3>
