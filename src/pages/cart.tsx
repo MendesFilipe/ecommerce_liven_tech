@@ -16,8 +16,19 @@ import { useAppSelector } from '../app/hooks';
 import { useTranslation } from 'react-i18next';
 const stripePromise = loadStripe(process.env.stripe_public_key);
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+  category: string;
+  rating: number;
+  quantity?: number;
+}
+
 interface requestType {
-  items: any[];
+  items: Product[];
   email: string;
 }
 
@@ -26,7 +37,7 @@ interface resultType {
 }
 
 const Cart: React.FC = () => {
-  const items = useAppSelector<any[]>(selectItems);
+  const items = useAppSelector<Product[]>(selectItems);
   const itemsTotal = useAppSelector<number>(selectTotalItems);
   const [session] = useSession();
   const total = useAppSelector<number>(selectTotal);

@@ -5,8 +5,19 @@ import { selectItems } from '../slices/cartSlice';
 import { useAppSelector } from '../app/hooks';
 import { useTranslation } from 'react-i18next';
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+  category: string;
+  rating: number;
+  quantity?: number;
+}
+
 const Success: React.FC = () => {
-  const items = useAppSelector<any[]>(selectItems);
+  const items = useAppSelector<Product[]>(selectItems);
   const { t } = useTranslation();
 
   return (

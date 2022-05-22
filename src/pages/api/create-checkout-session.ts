@@ -2,8 +2,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+  category: string;
+  rating: number;
+  quantity?: number;
+}
+
 interface requestType {
-  items: any[];
+  items: Product[];
   email: string;
 }
 
