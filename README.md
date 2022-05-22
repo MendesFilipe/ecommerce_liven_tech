@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://liven.tech/">
-    <img src="https://bit.ly/3Bkq0NH" alt="Logo" width="225" height="75">
+    <img src="https://ecommerce-liven-tech-jvwcb8bkl-mendesfilipe1.vercel.app/_next/image?url=https%3A%2F%2Fbit.ly%2F3Bkq0NH&w=256&q=75" alt="Logo" width="225" height="75">
   </a>
 
   <h3 align="center">E-commerce - Liven</h3>
@@ -11,7 +11,7 @@
     Development of a project para liven in React and Typescript, using Next.js.
     <br />
     <br />
-    <a href="https://ecommerce-liven-tech-m5r91qoj4-fmendes.vercel.app/">View Demo</a>
+    <a href="https://ecommerce-liven-tech-jvwcb8bkl-mendesfilipe1.vercel.app/">View Demo</a>
   </p>
 </div>
 
@@ -82,7 +82,7 @@ or
 Checkout and payment with Stripe
 
   <a href="https://stripe.com/en-br">
-    <img src="https://devfilipemendes.com/Screenshot.png" alt="exemple" width="1035" height="500">
+    <img src="https://devfilipemendes.com/Screenshot.png" alt="exemple" width="1035" height="440">
   </a>
 
 <!-- LICENSE -->
