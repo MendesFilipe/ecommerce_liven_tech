@@ -1,30 +1,22 @@
 import { updateQuantity } from '../../slices/cartSlice';
-import { useDispatch } from 'react-redux';
 
-function QuantityCount({
-  setQuantity,
-  quantity = 1,
-  dispatch = false,
-  id = null,
-}) {
-  const newDispatch = useDispatch();
-
+function QuantityCount({ setQuantity, quantity = 1, dispatch, id = null }) {
   const increaseCount = () => {
     setQuantity(quantity + 1);
-    updateQuantityHere(quantity + 1);
+    updateQuantityProduct(quantity + 1);
   };
 
   const decreaseCount = () => {
     if (quantity > 0) {
       setQuantity(quantity - 1);
-      updateQuantityHere(quantity - 1);
+      updateQuantityProduct(quantity - 1);
     }
   };
 
-  const updateQuantityHere = (count) => {
+  const updateQuantityProduct = (count) => {
     if (dispatch) {
       const product = { id, quantity: count };
-      newDispatch(updateQuantity(product));
+      dispatch(updateQuantity(product));
     }
   };
 
